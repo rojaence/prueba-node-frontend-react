@@ -33,7 +33,15 @@ export type UserProfile = Omit<IUser, "password"> & {
   sessions: IUserSession[]
 }
 
+export type UserProfileUpdateDTO = Omit<IUser, "id" | "password" | "status" | "sessionActive" | "email">
+
+export type UserUpdateDTO = Omit<IUser, "id" | "password" | "sessionActive"> & {
+  password?: string,
+  role: string
+}
+
 export type UserAuthenticated = {
   authenticated: boolean,
-  userProfile: UserProfile
+  userProfile: UserProfile,
+  loading: boolean
 }

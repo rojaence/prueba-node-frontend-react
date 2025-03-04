@@ -1,5 +1,5 @@
-import { UserAuthenticated } from "@/models/user.model";
-import { createSlice } from "@reduxjs/toolkit";
+import { UserAuthenticated, UserProfile } from "@/models/user.model";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const initialState: UserAuthenticated = {
   authenticated: false,
@@ -17,21 +17,26 @@ export const initialState: UserAuthenticated = {
     birthDate: '',
     roles: [],
     sessions: []
-  }
+  },
+  loading: true
 }
 
 export const profileSlice = createSlice({
   name: 'profile',
   initialState,
   reducers: {
-    setProfile: (state, action) => {
+    setProfile: (state, action: PayloadAction<UserProfile>) => {
       state.userProfile = action.payload
       state.authenticated = true
-      console.log(state)
-      return state
+      state.loading = false
+      // return state
+    },
+    setLoadingProfile(state, action: PayloadAction<boolean>) {
+      state.loading = action.payload
+      // return state
     }
   }
 })
 
-export const { setProfile } = profileSlice.actions
+export const { setProfile, setLoadingProfile } = profileSlice.actions
 export default profileSlice.reducer

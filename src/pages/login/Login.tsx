@@ -9,14 +9,11 @@ import { Toast } from 'primereact/toast';
 import { useRef } from "react"
 import { CodesHttpEnum } from "@/enums/codesHttp.enum"
 import { AxiosError } from "axios"
-import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { setProfile } from "@/redux/states/profile"
 import { PrivateRoutes } from "@/models/routes"
 
 function Login() {
   const toast = useRef<Toast>(null)
-  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const {
@@ -30,14 +27,12 @@ function Login() {
       const result = await login(data)
       if (result.code === CodesHttpEnum.ok) {
         toast.current?.show({ severity: 'success', summary: 'Mensaje', detail: result.message})
-        dispatch(setProfile(result.data))
         navigate(`/${PrivateRoutes.Dashboard}`, { replace: true })
       }
     } catch (error) {
       if (error instanceof AxiosError) {
         const { response } = error
         toast.current?.show({ severity: 'error', summary: 'Error', detail: response?.data.message})
-        
       }
     }
   }
@@ -47,7 +42,7 @@ function Login() {
     <section className="min-h-screen flex items-center justify-center">
       <Toast ref={toast}/>
       <Card title="Iniciar sesi&oacute;n" className="p-5">
-        <form action="#" className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
+        <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-2 mb-4">
             <label htmlFor="username">Nombre de usuario</label>
             <InputText id="username" className="mr-2" {...register("username", { required: true })}/>
