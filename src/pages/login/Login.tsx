@@ -9,9 +9,15 @@ import { Toast } from 'primereact/toast';
 import { useRef } from "react"
 import { CodesHttpEnum } from "@/enums/codesHttp.enum"
 import { AxiosError } from "axios"
+import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { setProfile } from "@/redux/states/profile"
+import { PrivateRoutes } from "@/models/routes"
 
 function Login() {
   const toast = useRef<Toast>(null)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const {
     register,
@@ -24,6 +30,8 @@ function Login() {
       const result = await login(data)
       if (result.code === CodesHttpEnum.ok) {
         toast.current?.show({ severity: 'success', summary: 'Mensaje', detail: result.message})
+        dispatch(setProfile(result.data))
+        navigate(`/${PrivateRoutes.Dashboard}`, { replace: true })
       }
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -41,8 +49,8 @@ function Login() {
       <Card title="Iniciar sesi&oacute;n" className="p-5">
         <form action="#" className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-2 mb-4">
-            <label htmlFor="username">Email</label>
-            <InputText id="username" placeholder="Username" className="mr-2" {...register("username", { required: true })}/>
+            <label htmlFor="username">Nombre de usuario</label>
+            <InputText id="username" className="mr-2" {...register("username", { required: true })}/>
             {errors.username?.type === "required" && 
               <Message severity="error" text="Nombre de usuario requerido" />
             }
@@ -50,7 +58,8 @@ function Login() {
 
           <div className="flex flex-col gap-2 mb-4">
             <label htmlFor="password">Contrase&ntilde;a</label>
-            <InputText id="password" placeholder="Username" className="mr-2" {...register("password", { required: true})}/>
+            <InputText id="password" className="mr-2" {...register("password", { required: true })} type="password"/>
+            {/* <Password id="password" className="mr-2" {...register("password", { required: true})} toggleMask feedback={false}/> */}
             {errors.password?.type === "required" && 
               <Message severity="error" text="Contrase&ntilde;a requerida" />
             }

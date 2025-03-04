@@ -4,6 +4,7 @@ export enum PublicRoutes {
 
 export enum PrivateRoutes {
   Dashboard = 'dashboard',
+  Home = 'home',
   Users = 'users',
   Profile = 'profile'
 }
