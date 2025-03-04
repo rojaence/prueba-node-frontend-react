@@ -40,6 +40,12 @@ export type UserUpdateDTO = Omit<IUser, "id" | "password" | "sessionActive"> & {
   role: string
 }
 
+export type UserPasswordUpdateDTO = {
+  currentPassword: string,
+  newPassword: string,
+  repeatPassword: string
+}
+
 export type UserAuthenticated = {
   authenticated: boolean,
   userProfile: UserProfile,

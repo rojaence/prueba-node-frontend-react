@@ -152,7 +152,7 @@ function UpdateProfile() {
       </div>
 
       <div className="col-span-full justify-self-end flex gap-2">
-        <Button label='Resetear' type="button" severity="secondary" text onClick={() => reset()}/>
+        <Button label='Cancelar' type="button" severity="secondary" text onClick={() => reset()}/>
         <Button label='Actualizar'/>
       </div>
     </form>

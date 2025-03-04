@@ -29,14 +29,15 @@ export const profileSlice = createSlice({
       state.userProfile = action.payload
       state.authenticated = true
       state.loading = false
-      // return state
     },
     setLoadingProfile(state, action: PayloadAction<boolean>) {
       state.loading = action.payload
-      // return state
+    },
+    setAuthenticated(state, action: PayloadAction<boolean>) {
+      state.authenticated = action.payload
     }
   }
 })
 
-export const { setProfile, setLoadingProfile } = profileSlice.actions
+export const { setProfile, setLoadingProfile, setAuthenticated } = profileSlice.actions
 export default profileSlice.reducer

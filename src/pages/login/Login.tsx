@@ -11,10 +11,13 @@ import { CodesHttpEnum } from "@/enums/codesHttp.enum"
 import { AxiosError } from "axios"
 import { useNavigate } from "react-router-dom"
 import { PrivateRoutes } from "@/models/routes"
+import { useDispatch } from "react-redux"
+import { setAuthenticated } from "@/redux/states/profile"
 
 function Login() {
   const toast = useRef<Toast>(null)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const {
     register,
@@ -27,6 +30,7 @@ function Login() {
       const result = await login(data)
       if (result.code === CodesHttpEnum.ok) {
         toast.current?.show({ severity: 'success', summary: 'Mensaje', detail: result.message})
+        dispatch(setAuthenticated(true))
         navigate(`/${PrivateRoutes.Dashboard}`, { replace: true })
       }
     } catch (error) {
