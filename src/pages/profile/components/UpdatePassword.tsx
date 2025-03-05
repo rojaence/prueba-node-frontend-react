@@ -23,7 +23,7 @@ function UpdatePassword() {
     reset,
     control,
     getValues,
-    formState: { errors, isValid, isDirty }
+    formState: { errors, isValid }
   } = useForm<UserPasswordUpdateDTO>({ defaultValues })
 
   const onSubmit: SubmitHandler<UserPasswordUpdateDTO> = async (data) => {

@@ -18,6 +18,7 @@ export const getProfile = async () => {
 }
 
 export const updateProfile = async (newUserProfile: UserProfileUpdateDTO) => {
+  console.log(newUserProfile)
   const { data } = await axios.put<IHttpResponse<UserProfile>>(`${authUrl}/profile`, newUserProfile)
   return data
 }

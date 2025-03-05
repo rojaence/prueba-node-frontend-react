@@ -34,10 +34,17 @@ export type UserProfile = Omit<IUser, "password"> & {
 }
 
 export type UserProfileUpdateDTO = Omit<IUser, "id" | "password" | "status" | "sessionActive" | "email">
+export type UserProfileForm = Omit<IUser, "id" | "password" | "status" | "sessionActive"> & {
+  role: string
+}
 
 export type UserUpdateDTO = Omit<IUser, "id" | "password" | "sessionActive"> & {
   password?: string,
-  role: string
+}
+
+export type UserFormData = Omit<IUser, "id" | "sessionActive"> & {
+  password?: string,
+  idRole?: number,
 }
 
 export type UserPasswordUpdateDTO = {

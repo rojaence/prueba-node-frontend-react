@@ -1,5 +1,10 @@
-import { UserUpdateDTO } from "@/models/user.model"
+import { CodesHttpEnum } from "@/enums/codesHttp.enum"
+import { UserProfileForm } from "@/models/user.model"
+import { setProfile } from "@/redux/states/profile"
 import { AppStore } from "@/redux/store"
+import { updateProfile } from "@/services/auth.service"
+import { AxiosError } from "axios"
+import { DateTime } from "luxon"
 import { Button } from "primereact/button"
 import { Calendar } from "primereact/calendar"
 import { InputText } from "primereact/inputtext"
@@ -7,12 +12,7 @@ import { Message } from "primereact/message"
 import { Toast } from "primereact/toast"
 import { useEffect, useRef } from "react"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
-import { DateTime } from "luxon"
 import { useDispatch, useSelector } from "react-redux"
-import { updateProfile } from "@/services/auth.service"
-import { AxiosError } from "axios"
-import { CodesHttpEnum } from "@/enums/codesHttp.enum"
-import { setProfile } from "@/redux/states/profile"
 
 function UpdateProfile() {
   const toast = useRef<Toast>(null)
@@ -25,9 +25,9 @@ function UpdateProfile() {
     reset,
     control,
     formState: {errors, isValid }
-  } = useForm<UserUpdateDTO>()
+  } = useForm<UserProfileForm>()
 
-  const onSubmit: SubmitHandler<UserUpdateDTO> = async (data) => {
+  const onSubmit: SubmitHandler<UserProfileForm> = async (data) => {
 
     try {
       if (!isValid) return
@@ -45,7 +45,7 @@ function UpdateProfile() {
   }
 
   useEffect(() => {
-    const resetData: UserUpdateDTO = {
+    const resetData: UserProfileForm = {
       username: userProfile.username,
       email: userProfile.email,
       firstName: userProfile.firstName,
@@ -55,7 +55,6 @@ function UpdateProfile() {
       idCard: userProfile.idCard,
       birthDate: userProfile.birthDate,
       role: userProfile.roles[0].name,
-      status: userProfile.status
     }
 
     reset(resetData)

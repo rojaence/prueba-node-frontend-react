@@ -11,6 +11,8 @@ import Home from "../home/Home"
 import Profile from "../profile/Profile"
 import Users from "../users/Users"
 import AuthGuard from "@/guards/AuthGuard"
+import { setLoadingRoles, setRoles } from "@/redux/states/roles"
+import { getRoles } from "@/services/role.service"
 
 function Dashboard() {
   const dispatch = useDispatch() 
@@ -30,8 +32,27 @@ function Dashboard() {
       dispatch(setLoadingProfile(false))
     }
   }
+
+  const fetchRoles = async () => {
+    dispatch(setLoadingRoles(true))
+    try {
+      const response = await getRoles()
+      if (response.code === CodesHttpEnum.ok) {
+        console.log(response.data)
+        dispatch(setRoles(response.data!))
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error)
+      }
+    } finally {
+      dispatch(setLoadingRoles(false))
+    }
+  }
+
   useEffect(() => {
     fetchProfile()
+    fetchRoles()
   }, [])
 
   return (

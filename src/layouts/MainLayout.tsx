@@ -33,7 +33,7 @@ function MainLayout({ children }: Props) {
   );
   return (
     <>
-      <Toolbar start={startContent} end={endContent}/>
+      <Toolbar start={startContent} end={endContent} className="sticky top-0 z-50"/>
       <main className="p-2">
         { children }
       </main>
